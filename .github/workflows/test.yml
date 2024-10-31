@@ -21,7 +21,11 @@ on:
         type: string
         required: false
         default: ""          
-        
+    secrets:
+      ONEC_USERNAME:
+        required: false  
+      ONEC_PASSWORD:
+        required: false    
 
 jobs:
   build:
