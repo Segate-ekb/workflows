@@ -25,7 +25,9 @@ on:
       ONEC_USERNAME:
         required: false  
       ONEC_PASSWORD:
-        required: false    
+        required: false
+      ONEC_LICENCE:
+        required: false     
 
 jobs:
   build:
