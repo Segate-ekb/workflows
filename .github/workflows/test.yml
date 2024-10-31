@@ -75,7 +75,7 @@ jobs:
       
       - name: Установка дополнительных пакетов
         if: inputs.additional_oscript_packages != ''
-        run: opm install -l ${{ inputs.additional_oscript_packages }}
+        run: opm install ${{ inputs.additional_oscript_packages }}
 
       - name: Установка 1С:Предприятие
         if: inputs.v8_version != ''
