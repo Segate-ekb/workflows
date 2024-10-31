@@ -108,4 +108,6 @@ jobs:
   
 
       - name: Тестирование
-        run: opm run test #oscript ${{ inputs.test_script_path}}
+        run: |
+          SET LOGOS_LEVEL=DEBUG
+          oscript ${{ inputs.test_script_path}}
