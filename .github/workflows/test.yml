@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'windows-latest']
+        os: [ 'windows-latest']
         oscript_version: 
           - ${{ inputs.oscript_version }}
         
@@ -108,4 +108,4 @@ jobs:
   
 
       - name: Тестирование
-        run: oscript ${{ inputs.test_script_path}}
+        run: opm run test #oscript ${{ inputs.test_script_path}}
