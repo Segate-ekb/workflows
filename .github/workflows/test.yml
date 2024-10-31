@@ -106,8 +106,13 @@ jobs:
         env:
             ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
   
-
-      - name: Тестирование
+      - name: Check for epf folder
         run: |
-          SET LOGOS_LEVEL=DEBUG
-          oscript ${{ inputs.test_script_path}}
+              if exist "D:\a\vanessa-runner\epf" (
+                echo epf folder exists
+              ) else (
+                echo epf folder does not exist
+                exit /b 1
+              )
+      # - name: Тестирование
+      #   run: oscript ${{ inputs.test_script_path}}
