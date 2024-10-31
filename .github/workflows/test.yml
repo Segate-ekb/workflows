@@ -87,15 +87,6 @@ jobs:
         env: 
           ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
           ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }} 
-
-      - name: Установка лицензии (Linux)
-        if: inputs.v8_version != '' && matrix.os == 'ubuntu-latest'
-        run: |
-            sudo mkdir -p /var/1C/licenses
-            echo "${{ secrets.ONEC_LICENCE }}" | sudo tee /var/1C/licenses/licence.lic > /dev/null
-        shell: bash
-        env:
-            ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
   
       - name: Установка лицензии (Windows)
         if: inputs.v8_version != '' && matrix.os == 'windows-latest'
@@ -106,13 +97,6 @@ jobs:
         env:
             ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
   
-      - name: Check for epf folder
-        run: |
-              if exist "D:\a\vanessa-runner\epf" (
-                echo epf folder exists
-              ) else (
-                echo epf folder does not exist
-                exit /b 1
-              )
-      # - name: Тестирование
-      #   run: oscript ${{ inputs.test_script_path}}
+      - name: Тестирование
+        working-directory: ./vanessa-runner
+        run: oscript ${{ inputs.test_script_path}}
