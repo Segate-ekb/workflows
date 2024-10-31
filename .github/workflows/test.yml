@@ -88,18 +88,24 @@ jobs:
           ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
           ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }} 
 
-      - name: Установка лицензии
-        if: inputs.v8_version != ''
+      - name: Установка лицензии (Linux)
+        if: inputs.v8_version != '' && matrix.os == 'ubuntu-latest'
         run: |
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
             sudo mkdir -p /var/1C/licenses
             echo "${{ secrets.ONEC_LICENCE }}" | sudo tee /var/1C/licenses/licence.lic > /dev/null
-          elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+        shell: bash
+        env:
+            ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
+  
+      - name: Установка лицензии (Windows)
+        if: inputs.v8_version != '' && matrix.os == 'windows-latest'
+        run: |
             mkdir "C:\ProgramData\1C\licenses" -Force
             echo $Env:ONEC_LICENCE | Out-File -FilePath "C:\ProgramData\1C\licenses\licence.lic" -Encoding ascii
-          fi
+        shell: pwsh
         env:
-          ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
+            ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
+  
 
       - name: Тестирование
         run: oscript ${{ inputs.test_script_path}}
