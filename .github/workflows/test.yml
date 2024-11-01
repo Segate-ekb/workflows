@@ -99,4 +99,6 @@ jobs:
   
       - name: Тестирование
         shell: cmd
+        env:
+          WORKSPACE: ''
         run: oscript ${{ inputs.test_script_path}}
