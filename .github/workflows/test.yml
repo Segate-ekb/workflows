@@ -77,30 +77,26 @@ jobs:
         if: inputs.additional_oscript_packages != ''
         run: opm install ${{ inputs.additional_oscript_packages }}
 
-      # - name: Установка 1С:Предприятие
-      #   if: inputs.v8_version != ''
-      #   uses: 1CDevFlow/onec-setup-action@main
-      #   with:
-      #     type: onec # Тип устанавливаемого приложения
-      #     onec_version: ${{ inputs.v8_version }}
-      #     cache: false
-      #   env: 
-      #     ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
-      #     ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }} 
+      - name: Установка 1С:Предприятие
+        if: inputs.v8_version != ''
+        uses: 1CDevFlow/onec-setup-action@main
+        with:
+          type: onec # Тип устанавливаемого приложения
+          onec_version: ${{ inputs.v8_version }}
+          cache: false
+        env: 
+          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
+          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }} 
   
-      # - name: Установка лицензии (Windows)
-      #   if: inputs.v8_version != '' && matrix.os == 'windows-latest'
-      #   run: |
-      #       mkdir "C:\ProgramData\1C\licenses" -Force
-      #       echo $Env:ONEC_LICENCE | Out-File -FilePath "C:\ProgramData\1C\licenses\licence.lic" -Encoding ascii
-      #   shell: pwsh
-      #   env:
-      #       ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
+      - name: Установка лицензии (Windows)
+        if: inputs.v8_version != '' && matrix.os == 'windows-latest'
+        run: |
+            mkdir "C:\ProgramData\1C\licenses" -Force
+            echo $Env:ONEC_LICENCE | Out-File -FilePath "C:\ProgramData\1C\licenses\licence.lic" -Encoding ascii
+        shell: pwsh
+        env:
+            ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
   
       - name: Тестирование
         shell: cmd
-        env:
-          RUNNER_WORKSPACE: ''
-        run: |
-          set
-          oscript ${{ inputs.test_script_path}}
+        run: oscript ${{ inputs.test_script_path}}
