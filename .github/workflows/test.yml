@@ -98,5 +98,5 @@ jobs:
             ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
   
       - name: Тестирование
-        working-directory: ./vanessa-runner
+        shell: cmd
         run: oscript ${{ inputs.test_script_path}}
